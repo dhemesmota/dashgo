@@ -1,4 +1,4 @@
-import { useQuery } from "react-query";
+import { useInfiniteQuery, useQuery } from "react-query";
 import { api } from "../../api";
 
 type User = {
@@ -41,9 +41,8 @@ export async function getUsers(page: number): Promise<GetUsersResponse> {
     };
 }
 
-export function useUsers(page: number) {
-  return useQuery(['users', page], () => getUsers(page), {
+export function useInfiniteUsers(page: number) {
+  return useInfiniteQuery('users', () => getUsers(page), {
     staleTime: 1000 * 60 * 10, // 10 minutes
-    keepPreviousData: true,
   });
 }
